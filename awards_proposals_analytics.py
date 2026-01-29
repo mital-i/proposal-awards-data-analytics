@@ -4,13 +4,10 @@ from io import BytesIO
 
 def load_data(uploaded_file):
     try:
-        # sheet_name=0 ensures we grab the first tab if 'Master' isn't found
         return pd.read_excel(uploaded_file, sheet_name=0)
     except Exception:
-        # If Excel engines (openpyxl or xlrd) fail, it's likely a text file
         uploaded_file.seek(0)
         try:
-            # Detects if the 'CSV' is actually Tab-Separated or Comma-Separated
             return pd.read_csv(
                 uploaded_file, 
                 sep=None, 
@@ -27,15 +24,13 @@ st.title("📊 Research Development Data Processor")
 st.sidebar.header("Configuration")
 master_file = st.sidebar.file_uploader(
     "Upload Faculty_Master File", 
-    type=['xlsx', 'xls', 'csv'] # Added 'xls' here
+    type=['xlsx', 'xls', 'csv']
 )
 
 def get_fiscal_quarter(df, date_col):
     """Calculates Fiscal Year and Quarter based on July 1st start."""
     df[date_col] = pd.to_datetime(df[date_col])
-    # Fiscal Year logic
     df['Fiscal Year'] = df[date_col].dt.year + (df[date_col].dt.month >= 7).astype(int)
-    # Fiscal Quarter logic
     df['Quarter'] = ((df[date_col].dt.month - 7) % 12 // 3) + 1
     return df
 
@@ -45,7 +40,7 @@ def to_excel(df):
         df.to_excel(writer, index=False, sheet_name='Sheet1')
     return output.getvalue()
 
-tab1, tab2 = st.tabs(["🏆 Awards", "📝 Proposals"])
+tab1, tab2 = st.tabs(["Awards", "Proposals"])
 
 if master_file:
     # Use the robust loader that ignores sheet names
@@ -74,7 +69,7 @@ if master_file:
             st.dataframe(final_awards.head(10))
             
             st.download_button(
-                label="📥 Download Processed Awards",
+                label="Download Processed Awards",
                 data=to_excel(final_awards),
                 file_name="Processed_Awards.xlsx",
                 mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
@@ -100,11 +95,11 @@ if master_file:
             st.dataframe(final_proposals.head(10))
             
             st.download_button(
-                label="📥 Download Processed Proposals",
+                label="Download Processed Proposals",
                 data=to_excel(final_proposals),
                 file_name="Processed_Proposals.xlsx",
                 mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             )
 
 else:
-    st.info("👋 Please upload your Faculty Master file in the sidebar to begin.")
+    st.info("Please upload your Faculty Master file in the sidebar to begin.")
