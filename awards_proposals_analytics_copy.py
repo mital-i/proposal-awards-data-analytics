@@ -2,14 +2,12 @@ import streamlit as st
 import pandas as pd
 import altair as alt
 from io import BytesIO
-
 import os
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-
-FACULTY_MASTER_PATH = os.path.join(BASE_DIR, "data", "faculty_master.xlsx")
-AWARDS_DATA_PATH = os.path.join(BASE_DIR, "data", "awards_df.xls")
-PROPOSALS_DATA_PATH = os.path.join(BASE_DIR, "data", "proposals_df.xls")
+_BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+FACULTY_MASTER_PATH = os.path.join(_BASE_DIR, "data", "faculty_master.xlsx")
+AWARDS_DATA_PATH = os.path.join(_BASE_DIR, "data", "awards_df.xls")
+PROPOSALS_DATA_PATH = os.path.join(_BASE_DIR, "data", "proposals_df.xls")
 
 AWARD_DATE_COL = "Award Finalize Date"
 AWARD_AMOUNT_COL = "Award Obligated Total Cost"
@@ -26,7 +24,6 @@ FACULTY_DEPT_COL = "Department"
 
 @st.cache_data
 def load_excel_or_csv(path):
-    import os
     if not os.path.exists(path):
         return None
     try:
