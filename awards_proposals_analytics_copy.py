@@ -7,9 +7,9 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-FACULTY_MASTER_PATH = "data/faculty_master.xlsx"
-AWARDS_DATA_PATH = "data/awards_df.xls"
-PROPOSALS_DATA_PATH = "data/proposals_df.xls"
+FACULTY_MASTER_PATH = os.path.join(BASE_DIR, "data", "faculty_master.xlsx")
+AWARDS_DATA_PATH = os.path.join(BASE_DIR, "data", "awards_df.xls")
+PROPOSALS_DATA_PATH = os.path.join(BASE_DIR, "data", "proposals_df.xls")
 
 AWARD_DATE_COL = "Award Finalize Date"
 AWARD_AMOUNT_COL = "Award Obligated Total Cost"
