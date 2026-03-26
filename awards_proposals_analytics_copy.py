@@ -5,12 +5,7 @@ from io import BytesIO
 
 import os
 
-st.write("Current Working Directory:", os.getcwd())
-st.write("Files in root:", os.listdir("."))
-if os.path.exists("data"):
-    st.write("Files in /data folder:", os.listdir("data"))
-else:
-    st.write("The /data folder was not found at all!")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 FACULTY_MASTER_PATH = "data/faculty_master.xlsx"
 AWARDS_DATA_PATH = "data/awards_df.xls"
